@@ -1,0 +1,65 @@
+{
+  "name": "hoa",
+  "version": "0.1.0",
+  "description": "A minimal web framework built on Web Standards",
+  "main": "./dist/cjs/application.js",
+  "type": "module",
+  "module": "./dist/esm/application.js",
+  "types": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/esm/application.js",
+      "require": "./dist/cjs/application.js",
+      "default": "./dist/esm/application.js"
+    }
+  },
+  "files": [
+    "dist",
+    "types",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "lint": "eslint",
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview",
+    "build": "tsup",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "prepublishOnly": "npm run lint && npm run test && npm run build",
+    "prepare": "husky"
+  },
+  "author": "nswbmw",
+  "license": "MIT",
+  "homepage": "https://hoa-js.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hoa-js/hoa.git"
+  },
+  "keywords": [
+    "web",
+    "app",
+    "http",
+    "application",
+    "framework",
+    "middleware",
+    "nodejs",
+    "deno",
+    "bun",
+    "cloudflare",
+    "serverless",
+    "lambda"
+  ],
+  "devDependencies": {
+    "eslint": "9.36.0",
+    "globals": "16.4.0",
+    "husky": "9.1.7",
+    "jest": "30.1.3",
+    "neostandard": "0.12.2",
+    "tsup": "8.5.0",
+    "vitepress": "1.6.4"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
