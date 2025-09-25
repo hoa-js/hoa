@@ -1,0 +1,1 @@
+import{_ as e,c as t,o as r}from"./chunks/framework.CBTkueSR.js";const _=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"middleware/response-time.md","filePath":"middleware/response-time.md"}'),s={name:"middleware/response-time.md"};function a(o,n,i,d,m,c){return r(),t("div")}const l=e(s,[["render",a]]);export{_ as __pageData,l as default};
