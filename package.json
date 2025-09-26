@@ -51,6 +51,8 @@
     "lambda"
   ],
   "devDependencies": {
+    "@commitlint/cli": "20.0.0",
+    "@commitlint/config-conventional": "20.0.0",
     "eslint": "9.36.0",
     "globals": "16.4.0",
     "husky": "9.1.7",
