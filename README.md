@@ -9,7 +9,7 @@
 [![Codecov](https://img.shields.io/codecov/c/github/hoa-js/hoa/master)](https://app.codecov.io/gh/hoa-js/hoa/tree/master)
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/hoa)](https://bundlephobia.com/result?p=hoa)
 [![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)](https://github.com/hoa-js/hoa/blob/master/package.json)
-[![License](https://img.shields.io/github/license/hoa-js/hoa)](LICENSE.md)
+[![License](https://img.shields.io/github/license/hoa-js/hoa)](https://github.com/hoa-js/hoa/blob/master/LICENSE)
 
 Hoa is a minimal Web framework inspired by [Koa](https://github.com/koajs/koa) and [Hono](https://github.com/honojs/hono), built entirely on Web Standards. It runs seamlessly on any modern JavaScript runtime: Cloudflare Workers, Fastly Compute, Deno, Bun, Vercel, AWS Lambda, Lambda@Edge, and Node.js.
 
