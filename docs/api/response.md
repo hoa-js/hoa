@@ -172,27 +172,39 @@ app.use(async (ctx, next) => {
 
 ### ctx.res.body=
 
-Set the response body. Supports `string`, `object`, `ReadableStream`, `Blob`, `ArrayBuffer`, `URLSearchParams`, `FormData`, or `Response`. Setting `null` or `undefined` clears the body and adjusts headers for empty responses.
+Set the response body. Supports `string`, `object`, `Blob`, `ArrayBuffer`, `TypedArray`, `ReadableStream`, `FormData`, `URLSearchParams`, or `Response`. Setting `null` or `undefined` clears the body and adjusts headers for empty responses.
 
 ```js
 app.use((ctx) => {
+  // string
   ctx.res.body = 'Hello, Hoa!'
+  // json
   ctx.res.body = { message: 'Hello, Hoa!' }
+  // Blob
+  ctx.res.body = new Blob(['Hello, Hoa!'])
+  // ArrayBuffer
+  ctx.res.body = new TextEncoder().encode('Hello, Hoa!').buffer
+  // TypedArray
+  ctx.res.body = new TextEncoder().encode('Hello, Hoa!') 
+  // ReadableStream
   ctx.res.body = new ReadableStream({
     start (controller) {
       controller.enqueue(new TextEncoder().encode('Hello, Hoa!'))
       controller.close()
     }
   })
-  ctx.res.body = new Blob(['Hello, Hoa!'])
-  ctx.res.body = new TextEncoder().encode('Hello, Hoa!').buffer
-  ctx.res.body = new URLSearchParams({ message: 'Hello, Hoa!' })
-
+  // FormData
   const form = new FormData()
   form.append('message', 'Hello, Hoa!')
   ctx.res.body = form
-
+  // URLSearchParams
+  ctx.res.body = new URLSearchParams({ message: 'Hello, Hoa!' })
+  // Response
   ctx.res.body = new Response('Hello, Hoa!')
+  // null
+  ctx.res.body = null
+  // undefined
+  ctx.res.body = undefined
 })
 ```
 
