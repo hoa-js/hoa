@@ -55,6 +55,12 @@ export default defineConfig({
           { text: 'Timeout', link: '/middleware/timeout' },
         ]
       },
+      {
+        text: 'Example',
+        items: [
+          { text: 'Temp Note', link: 'https://github.com/hoa-js/examples/tree/master/tempnote' },
+        ]
+      },
     ],
 
     socialLinks: [
