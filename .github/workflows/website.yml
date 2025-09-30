@@ -7,6 +7,7 @@ on:
     paths:
       - docs/**
       - .github/workflows/website.yml
+      - .vitepress/config.js
       - README.md
 
 permissions:
