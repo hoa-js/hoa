@@ -2,13 +2,7 @@
 
 `@hoajs/cors` is a CORS (Cross-Origin Resource Sharing) middleware for Hoa. It adds the appropriate CORS response headers for both simple requests and preflight (OPTIONS) requests.
 
-### Install
-
-```bash
-npm i @hoajs/cors
-```
-
-### Basic Usage
+## Quick Start
 
 ```js
 import { Hoa } from 'hoa'
@@ -50,7 +44,7 @@ app.get('/private', cors({
 export default app
 ```
 
-### Options
+## Options
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -61,7 +55,7 @@ export default app
 | `credentials` | `boolean` | `false` | Whether to allow credentials (`Access-Control-Allow-Credentials: true`). |
 | `exposeHeaders` | `string[]` | `[]` | Response headers exposed to the browser (`Access-Control-Expose-Headers`). |
 
-### Behavior Details
+## Behavior Details
 
 - Access-Control-Allow-Origin
   - If `origin` is `'*'`, the middleware sets `Access-Control-Allow-Origin: *`.
@@ -88,7 +82,7 @@ export default app
 - Normalization & Deduplication
   - The middleware trims and deduplicates header lists (`allowHeaders`, `exposeHeaders`) and methods for consistency before emitting headers.
 
-### Examples
+## Examples
 
 Allow a single origin:
 
