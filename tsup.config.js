@@ -14,7 +14,7 @@ export default defineConfig([
     outDir: 'dist/esm',
     target: 'es2020',
     esbuildOptions (options) {
-      options.drop = ['console', 'debugger']
+      options.drop = ['debugger']
       options.legalComments = 'none'
     }
   },
@@ -34,7 +34,7 @@ export default defineConfig([
       return { js: '.js' }
     },
     esbuildOptions (options) {
-      options.drop = ['console', 'debugger']
+      options.drop = ['debugger']
       options.legalComments = 'none'
     }
   }
