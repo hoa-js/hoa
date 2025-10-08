@@ -1,3 +1,8 @@
+## v0.1.1 / 2025-10-08
+
+- fix: console is removed due to tsup configuration errors
+- chore(deps): update deps
+
 ## v0.1.0 / 2025-09-25
 
 - init
