@@ -45,7 +45,7 @@ export default defineConfig({
           { text: 'CORS', link: '/middleware/cors' },
           { text: 'CSRF', link: '/middleware/csrf' },
           { text: 'Etag', link: '/middleware/etag' },
-          { text: 'JSON Format', link: '/middleware/json-format' },
+          { text: 'JSON Format', link: '/middleware/json' },
           { text: 'JWT', link: '/middleware/jwt' },
           { text: 'Logger', link: '/middleware/logger' },
           { text: 'Method Override', link: '/middleware/method-override' },
