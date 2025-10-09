@@ -12,6 +12,8 @@ import HoaResponse from './response.js'
 
 /**
  * @class Application
+ * @property {string} name - Application name
+ * @property {boolean} [silent] - Suppress error console output when true
  */
 export default class Application {
   /**
@@ -194,15 +196,12 @@ function respond (ctx) {
     })
   }
 
-  // status no body - if no explicit status was set and no body, return 404
+  // status no body
   if (body == null) {
     if (res._explicitNullBody) {
       res.delete('Content-Type')
       res.delete('Transfer-Encoding')
       res.set('Content-Length', '0')
-    }
-    if (!res._explicitStatus) {
-      res.status = 404
     }
     return new Response(null, {
       status: res.status,

@@ -120,11 +120,13 @@ app.use((ctx) => {
 
 ## ctx.res.status
 
-Current response status code (defaults to `200`).
+Current response status code (defaults to `404`). When a body is set, it automatically becomes `200` if not explicitly set.
 
 ```js
 app.use((ctx) => {
-  console.log(ctx.res.status) // -> 200
+  console.log(ctx.res.status) // -> 404 (no body set yet)
+  ctx.res.body = 'Hello'
+  console.log(ctx.res.status) // -> 200 (automatically set when body is assigned)
 })
 ```
 

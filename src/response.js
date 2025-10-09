@@ -146,13 +146,13 @@ export default class HoaResponse {
 
   /**
    * Get the response status code.
-   * Defaults to 200 if not explicitly set.
+   * Defaults to 404 if not explicitly set.
    *
    * @returns {number} The HTTP status code
    * @public
    */
   get status () {
-    return this._status || 200
+    return this._status || 404
   }
 
   /**

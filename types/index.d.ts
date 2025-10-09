@@ -194,6 +194,7 @@ export declare class Application {
   constructor(options?: ApplicationOptions);
 
   name: string;
+  silent?: boolean;
   readonly HoaContext: typeof HoaContext;
   readonly HoaRequest: typeof HoaRequest;
   readonly HoaResponse: typeof HoaResponse;
