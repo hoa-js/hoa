@@ -3,7 +3,7 @@ import neostandard from 'neostandard'
 
 export default [
   ...neostandard({
-    ignores: ['dist/**', 'node_modules/**', '.vitepress/**']
+    ignores: ['dist/**', 'node_modules/**']
   }),
   {
     files: ['src/**/*.js', '__test__/**/*.js'],

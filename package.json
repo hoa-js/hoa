@@ -21,9 +21,6 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "docs:dev": "vitepress dev",
-    "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview",
     "build": "tsup",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "prepublishOnly": "npm run lint && npm run test && npm run build",
@@ -58,8 +55,7 @@
     "husky": "9.1.7",
     "jest": "30.2.0",
     "neostandard": "0.12.2",
-    "tsup": "8.5.0",
-    "vitepress": "1.6.4"
+    "tsup": "8.5.0"
   },
   "engines": {
     "node": ">=20"
