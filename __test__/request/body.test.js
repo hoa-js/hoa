@@ -1,4 +1,4 @@
-import Hoa from '../../src/application.js'
+import Hoa from '../../src/hoa.js'
 
 describe('req.body', () => {
   it('should get and set request body stream', async () => {

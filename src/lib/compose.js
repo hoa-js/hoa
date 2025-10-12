@@ -1,18 +1,11 @@
 /**
  * Compose middleware functions into a single dispatcher.
  *
- * @param {Function[]} middlewares
- * @returns {Function}
+ * @param {HoaMiddleware[]} middlewares - Array of middleware functions
+ * @returns {HoaMiddleware} Composed middleware function
  * @private
  */
 const composeSlim = (middlewares) => async (ctx, next) => {
-  /**
-   * Creates a dispatch function for the middleware at index i.
-   * Each dispatch function calls the next middleware in the chain.
-   *
-   * @param {number} i - Index of the current middleware
-   * @returns {Function} Async function that executes the middleware
-   */
   const dispatch = (i) => async () => {
     const fn = i === middlewares.length
       ? next
@@ -24,18 +17,11 @@ const composeSlim = (middlewares) => async (ctx, next) => {
 }
 
 /**
- * @callback Middleware
- * @param {any} ctx
- * @param {Function} next
- * @returns {Promise<any>|any}
- */
-
-/**
  * Compose multiple middleware functions into one.
  * Validates input, flattens nested arrays, and returns a composed dispatcher.
  *
- * @param {Middleware[]|Middleware[][]} middlewares
- * @returns {(ctx: HoaContext) => Promise<void>}
+ * @param {HoaMiddleware[]|HoaMiddleware[][]} middlewares - Array of middleware functions or nested arrays
+ * @returns {HoaMiddleware} Composed middleware function
  * @throws {TypeError}
  * @public
  */

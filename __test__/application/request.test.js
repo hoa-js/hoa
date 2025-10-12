@@ -1,4 +1,4 @@
-import Hoa from '../../src/application.js'
+import Hoa from '../../src/hoa.js'
 
 describe('app.HoaRequest', () => {
   it('should support extending with properties and methods', async () => {

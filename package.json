@@ -2,16 +2,16 @@
   "name": "hoa",
   "version": "0.1.2",
   "description": "A minimal web framework built on Web Standards",
-  "main": "./dist/cjs/application.js",
+  "main": "./dist/cjs/hoa.js",
   "type": "module",
-  "module": "./dist/esm/application.js",
+  "module": "./dist/esm/hoa.js",
   "types": "./types/index.d.ts",
   "exports": {
     ".": {
       "types": "./types/index.d.ts",
-      "import": "./dist/esm/application.js",
-      "require": "./dist/cjs/application.js",
-      "default": "./dist/esm/application.js"
+      "import": "./dist/esm/hoa.js",
+      "require": "./dist/cjs/hoa.js",
+      "default": "./dist/esm/hoa.js"
     }
   },
   "files": [

@@ -1,4 +1,4 @@
-import Hoa from '../../src/application.js'
+import Hoa from '../../src/hoa.js'
 
 describe('res.has(name)', () => {
   it('should be case insensitive', () => {

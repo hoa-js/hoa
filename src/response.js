@@ -160,8 +160,7 @@ export default class HoaResponse {
    * Automatically clears body for status codes that should not have content.
    *
    * @param {number} val - The HTTP status code (100-599)
-   * @throws {TypeError} When status code is not an integer
-   * @throws {TypeError} When status code is out of valid range (100–599)
+   * @throws {TypeError}
    * @public
    */
   set status (val) {
@@ -419,7 +418,7 @@ export default class HoaResponse {
   /**
    * Return JSON representation of the response.
    *
-   * @returns {ResJSON}
+   * @returns {ResJSON} JSON representation of response
    * @public
    */
   toJSON () {

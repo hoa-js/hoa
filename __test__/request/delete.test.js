@@ -1,4 +1,4 @@
-import Hoa from '../../src/application.js'
+import Hoa from '../../src/hoa.js'
 
 describe('req.delete(name)', () => {
   it('should initialize headers store on first call', () => {

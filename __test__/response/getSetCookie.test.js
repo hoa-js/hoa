@@ -1,4 +1,4 @@
-import Hoa from '../../src/application.js'
+import Hoa from '../../src/hoa.js'
 
 describe('res.getSetCookie()', () => {
   it('should return all Set-Cookie headers as an array', () => {

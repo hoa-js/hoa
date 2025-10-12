@@ -550,7 +550,7 @@ export default class HoaRequest {
    * This method can only be called once per request.
    *
    * @returns {Promise<any>} The parsed JSON data
-   * @throws {SyntaxError} When the body is not valid JSON
+   * @throws {SyntaxError}
    * @public
    */
   async json () {
@@ -572,7 +572,7 @@ export default class HoaRequest {
   /**
    * Return JSON representation of the request.
    *
-   * @returns {ReqJSON}
+   * @returns {ReqJSON} JSON representation of request
    * @public
    */
   toJSON () {

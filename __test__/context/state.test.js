@@ -1,4 +1,4 @@
-import Hoa from '../../src/application.js'
+import Hoa from '../../src/hoa.js'
 
 describe('ctx.state', () => {
   it('should share state between middleware', async () => {

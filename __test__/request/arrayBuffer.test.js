@@ -1,4 +1,4 @@
-import Hoa from '../../src/application.js'
+import Hoa from '../../src/hoa.js'
 
 describe('req.arrayBuffer()', () => {
   it('should read request body as ArrayBuffer', async () => {

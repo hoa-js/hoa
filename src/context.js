@@ -3,7 +3,7 @@ import { statusTextMapping } from './lib/utils.js'
 
 /**
  * @typedef {Object} CtxJSON
- * @property {ReturnType<import('./application.js').default.prototype.toJSON>} app
+ * @property {ReturnType<import('./hoa.js').default.prototype.toJSON>} app
  * @property {ReturnType<import('./request.js').default.prototype.toJSON>} req
  * @property {ReturnType<import('./response.js').default.prototype.toJSON>} res
  */
@@ -31,8 +31,8 @@ export default class HoaContext {
   /**
    * Throw an HttpError.
    *
-   * @param {number} status
-   * @param {string|{message?: string, cause?: any, headers?: HeadersInit}} [messageOrOptions]
+   * @param {number} status - HTTP status code
+   * @param {string|{message?: string, cause?: any, headers?: HeadersInit}} [messageOrOptions] - Error message or options object
    * @throws {HttpError}
    * @public
    */
@@ -55,8 +55,9 @@ export default class HoaContext {
 
   /**
    * Default error handling and response builder.
-   * @param {Error} err
-   * @returns {Response}
+   *
+   * @param {Error} err - Error to handle
+   * @returns {Response} Web Standard Response object
    * @private
    */
   onerror (err) {
@@ -95,7 +96,8 @@ export default class HoaContext {
 
   /**
    * Return JSON representation of the context.
-   * @returns {CtxJSON}
+   *
+   * @returns {CtxJSON} JSON representation of context
    * @public
    */
   toJSON () {

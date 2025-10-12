@@ -11,13 +11,13 @@ import HoaResponse from './response.js'
  */
 
 /**
- * @class Application
+ * @class Hoa
  * @property {string} name - Application name
  * @property {boolean} [silent] - Suppress error console output when true
  */
-export default class Application {
+export default class Hoa {
   /**
-   * Create an Application instance.
+   * Create an Hoa instance.
    *
    * @param {Object} [options={}] - Application options
    * @param {string} [options.name='Hoa'] - Application name for identification
@@ -33,9 +33,10 @@ export default class Application {
 
   /**
    * Extend the application with a plugin initializer.
-   * @param {(app: Application) => void} fn - Plugin function that receives the app instance
-   * @returns {Application}
-   * @throws {TypeError} If fn is not a function
+   *
+   * @param {HoaExtend} fn - Plugin function that receives the app instance
+   * @returns {Hoa} The Hoa instance for method chaining
+   * @throws {TypeError}
    * @public
    */
   extend (fn) {
@@ -46,9 +47,10 @@ export default class Application {
 
   /**
    * Register a middleware. Executed in registration order.
-   * @param {(ctx: HoaContext, next: () => Promise<void>) => Promise<any | void>} fn - Middleware function
-   * @returns {Application}
-   * @throws {TypeError} If fn is not a function
+   *
+   * @param {HoaMiddleware} fn - Middleware function
+   * @returns {Hoa} The Hoa instance for method chaining
+   * @throws {TypeError}
    * @public
    */
   use (fn) {
@@ -65,7 +67,7 @@ export default class Application {
    * @param {Request} request - Web Standard Request object
    * @param {any} [env] - Environment variables (platform-specific)
    * @param {any} [executionCtx] - Execution context (platform-specific)
-   * @returns {Promise<Response>}
+   * @returns {Promise<Response>} Web Standard Response object
    * @public
    */
   fetch (request, env, executionCtx) {
@@ -80,8 +82,8 @@ export default class Application {
    * Manages error handling and response building.
    *
    * @param {HoaContext} ctx - Request context
-   * @param {(ctx: HoaContext) => Promise<void>} middlewareFn - Composed middleware function
-   * @returns {Promise<Response>}
+   * @param {HoaMiddleware} middlewareFn - Composed middleware function
+   * @returns {Promise<Response>} Web Standard Response object
    * @private
    */
   handleRequest (ctx, middlewareFn) {
@@ -98,7 +100,7 @@ export default class Application {
    * @param {Request} request - Web Standard Request object
    * @param {any} [env] - Environment variables
    * @param {any} [executionCtx] - Execution context
-   * @returns {HoaContext}
+   * @returns {HoaContext} Created context instance
    * @private
    */
   createContext (request, env, executionCtx) {
@@ -118,7 +120,8 @@ export default class Application {
    *
    * @param {Error} err - Error to handle
    * @param {HoaContext} [ctx] - Request context (optional)
-   * @throws {TypeError} When err is not a proper Error object
+   * @returns {void}
+   * @throws {TypeError}
    * @private
    */
   onerror (err, ctx) {
@@ -137,17 +140,17 @@ export default class Application {
   /**
    * ESM/CJS interop helper for default exports.
    *
-   * @returns {typeof Application}
+   * @returns {typeof Hoa} The Hoa class
    * @static
    */
   static get default () {
-    return Application
+    return Hoa
   }
 
   /**
    * Return JSON representation of the app.
    *
-   * @returns {AppJSON}
+   * @returns {AppJSON} JSON representation of application
    * @public
    */
   toJSON () {
@@ -162,7 +165,7 @@ export default class Application {
  * Handles various body types, HEAD requests, and status-specific behaviors.
  *
  * @param {HoaContext} ctx - Request context with response state
- * @returns {Response}
+ * @returns {Response} Web Standard Response object
  * @private
  */
 function respond (ctx) {
@@ -245,4 +248,4 @@ function respond (ctx) {
   })
 }
 
-export { Application as Hoa, HoaContext, HoaRequest, HoaResponse, HttpError, compose }
+export { Hoa, HoaContext, HoaRequest, HoaResponse, HttpError, compose }

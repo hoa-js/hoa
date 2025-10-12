@@ -1,4 +1,4 @@
-import Hoa from '../../src/application.js'
+import Hoa from '../../src/hoa.js'
 
 describe('ctx.throw(status, message)', () => {
   it('should throw with status code only', () => {

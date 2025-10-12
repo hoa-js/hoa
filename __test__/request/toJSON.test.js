@@ -1,4 +1,4 @@
-import Hoa from '../../src/application.js'
+import Hoa from '../../src/hoa.js'
 
 describe('req.toJSON()', () => {
   it('should return JSON with basic request info', () => {

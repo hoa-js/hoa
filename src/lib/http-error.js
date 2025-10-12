@@ -15,7 +15,7 @@ export default class HttpError extends Error {
    * @param {number} status - HTTP status code (400-599, invalid codes become 500)
    * @param {string|HttpErrorOptions} [message] - Error message or options object
    * @param {HttpErrorOptions} [options] - Additional options when second param is string
-   * @throws {TypeError} When status is not an integer
+   * @throws {TypeError}
    */
   constructor (status, message, options) {
     if (!Number.isInteger(status)) {

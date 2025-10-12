@@ -1,4 +1,4 @@
-import Hoa from '../../src/application.js'
+import Hoa from '../../src/hoa.js'
 
 describe('req.headers', () => {
   it('should return the request headers object (case-insensitive)', () => {

@@ -1,4 +1,4 @@
-import Hoa from '../../src/application.js'
+import Hoa from '../../src/hoa.js'
 
 describe('res.toJSON()', () => {
   it('should return JSON with status, statusText, and headers', () => {

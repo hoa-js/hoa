@@ -1,4 +1,4 @@
-import Hoa from '../../src/application.js'
+import Hoa from '../../src/hoa.js'
 
 describe('ctx.assert(value, status, message)', () => {
   it('should throw an error for falsy values', () => {

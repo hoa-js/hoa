@@ -1,4 +1,4 @@
-import Hoa from '../../src/application.js'
+import Hoa from '../../src/hoa.js'
 
 describe('res.append(name, value)', () => {
   it('should append multiple values to same header', () => {

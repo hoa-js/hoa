@@ -1,4 +1,4 @@
-import Hoa from '../../src/application.js'
+import Hoa from '../../src/hoa.js'
 
 describe('ctx.onerror(err)', () => {
   it('should handle errors and reset headers', async () => {

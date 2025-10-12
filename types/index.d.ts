@@ -1,75 +1,67 @@
-export type NextFunction = () => Promise<void>;
-
-export interface ApplicationOptions {
-  name?: string;
-}
-
-export type HeaderEntry = readonly [string, string];
-
-export type HoaHeadersInit = Headers | Record<string, string> | Iterable<HeaderEntry>;
-
-export interface AppJSON {
+interface AppJSON {
   name: string;
 }
 
-export interface ReqJSON {
-  method: string;
-  url: string;
-  headers: Record<string, string>;
-}
-
-export interface ResJSON {
-  status: number;
-  statusText: string;
-  headers: Record<string, string>;
-}
-
-export interface CtxJSON {
+interface CtxJSON {
   app: AppJSON;
   req: ReqJSON;
   res: ResJSON;
 }
 
-export interface CtxOptions {
-  request?: Request;
-  env?: any;
-  executionCtx?: any;
+interface ReqJSON {
+  method: string;
+  url: string;
+  headers: Record<string, string>;
 }
 
-export interface HttpErrorOptions {
-  message?: string;
-  cause?: unknown;
-  expose?: boolean;
-  headers?: HoaHeadersInit;
+interface ResJSON {
+  status: number;
+  statusText: string;
+  headers: Record<string, string>;
 }
 
-export type HoaMiddleware<Ctx extends HoaContext = HoaContext> = (ctx: Ctx, next: NextFunction) => Promise<any> | any;
+export type HoaExtend = (app: Hoa) => void;
 
-export declare class HttpError extends Error {
-  constructor(status: number, message?: string | HttpErrorOptions, options?: HttpErrorOptions);
-  readonly status: number;
-  readonly statusCode: number;
-  readonly expose: boolean;
-  readonly headers?: Record<string, string>;
+export type HoaMiddleware = (ctx: HoaContext, next?: () => Promise<void>) => Promise<void> | void;
+
+export declare class Hoa {
+  constructor(options?: { name?: string });
+
+  name: string;
+  silent?: boolean;
+  readonly HoaContext: typeof HoaContext;
+  readonly HoaRequest: typeof HoaRequest;
+  readonly HoaResponse: typeof HoaResponse;
+  readonly middlewares: HoaMiddleware[];
+
+  extend(fn: HoaExtend): this;
+  use(fn: HoaMiddleware): this;
+  fetch(request: Request, env?: any, executionCtx?: any): Promise<Response>;
+  protected handleRequest(ctx: HoaContext, middlewareFn: HoaMiddleware): Promise<Response>;
+  protected createContext(request: Request, env?: any, executionCtx?: any): HoaContext;
+  protected onerror(err: unknown, ctx?: HoaContext): void;
+  toJSON(): AppJSON;
+
+  static get default(): typeof Hoa;
 }
 
 export declare class HoaContext {
-  constructor(options?: CtxOptions);
-  app: Application;
+  constructor(options?: { request?: Request; env?: any; executionCtx?: any });
+  app: Hoa;
   req: HoaRequest;
   res: HoaResponse;
   request?: Request;
   env?: any;
   executionCtx?: any;
   state: Record<string, any>;
-  throw(status: number, message?: string | HttpErrorOptions, options?: HttpErrorOptions): never;
-  assert<T>(value: T, status: number, message?: string | HttpErrorOptions, options?: HttpErrorOptions): asserts value;
+  throw(status: number, message?: string | { message?: string; cause?: unknown; expose?: boolean; headers?: Headers | Record<string, string> | Iterable<readonly [string, string]> }, options?: { message?: string; cause?: unknown; expose?: boolean; headers?: Headers | Record<string, string> | Iterable<readonly [string, string]> }): never;
+  assert<T>(value: T, status: number, message?: string | { message?: string; cause?: unknown; expose?: boolean; headers?: Headers | Record<string, string> | Iterable<readonly [string, string]> }, options?: { message?: string; cause?: unknown; expose?: boolean; headers?: Headers | Record<string, string> | Iterable<readonly [string, string]> }): asserts value is NonNullable<T>;
   onerror(err: unknown): Response;
   toJSON(): CtxJSON;
 }
 
 export declare class HoaRequest {
-  app: Application;
+  app: Hoa;
   ctx: HoaContext;
   res: HoaResponse;
 
@@ -107,10 +99,10 @@ export declare class HoaRequest {
   set method(value: string);
 
   get query(): Record<string, string | string[]>;
-  set query(value: Record<string, string | readonly string[]>);
+  set query(value: Record<string, string | string[]>);
 
   get headers(): Record<string, string>;
-  set headers(value: HoaHeadersInit);
+  set headers(value: Headers | Record<string, string> | Iterable<readonly [string, string]>);
 
   get body(): ReadableStream<Uint8Array> | null;
   set body(value: any);
@@ -139,7 +131,7 @@ export declare class HoaRequest {
   toJSON(): ReqJSON;
 }
 
-export type ResponseBody =
+type ResponseBody =
   | string
   | Blob
   | ArrayBuffer
@@ -153,12 +145,12 @@ export type ResponseBody =
   | undefined;
 
 export declare class HoaResponse {
-  app: Application;
+  app: Hoa;
   ctx: HoaContext;
   req: HoaRequest;
 
   get headers(): Record<string, string>;
-  set headers(value: HoaHeadersInit);
+  set headers(value: Headers | Record<string, string> | Iterable<readonly [string, string]>);
 
   get(field: string): string | null;
   getSetCookie(): string[];
@@ -190,45 +182,21 @@ export declare class HoaResponse {
   toJSON(): ResJSON;
 }
 
-export declare class Application {
-  constructor(options?: ApplicationOptions);
-
-  name: string;
-  silent?: boolean;
-  readonly HoaContext: typeof HoaContext;
-  readonly HoaRequest: typeof HoaRequest;
-  readonly HoaResponse: typeof HoaResponse;
-  readonly middlewares: HoaMiddleware[];
-
-  extend(fn: (app: Application) => void): this;
-  use(fn: HoaMiddleware): this;
-  fetch(request: Request, env?: any, executionCtx?: any): Promise<Response>;
-  protected handleRequest(ctx: HoaContext, middlewareFn: (ctx: HoaContext) => Promise<void>): Promise<Response>;
-  protected createContext(request: Request, env?: any, executionCtx?: any): HoaContext;
-  protected onerror(err: unknown, ctx?: HoaContext): void;
-  toJSON(): AppJSON;
-
-  static get default(): typeof Application;
+export declare class HttpError extends Error {
+  constructor(
+    status: number,
+    message?: string | { message?: string; cause?: unknown; expose?: boolean; headers?: Headers | Record<string, string> | Iterable<readonly [string, string]> },
+    options?: { message?: string; cause?: unknown; expose?: boolean; headers?: Headers | Record<string, string> | Iterable<readonly [string, string]> }
+  );
+  readonly name: string;
+  readonly status: number;
+  readonly statusCode: number;
+  readonly expose: boolean;
+  readonly headers?: Record<string, string>;
 }
 
-export declare function compose<Ctx extends HoaContext = HoaContext>(
-  middlewares: ReadonlyArray<HoaMiddleware<Ctx>> | ReadonlyArray<ReadonlyArray<HoaMiddleware<Ctx>>>
-): (ctx: Ctx, next?: NextFunction) => Promise<void>;
+export declare function compose(
+  middlewares: ReadonlyArray<HoaMiddleware> | ReadonlyArray<ReadonlyArray<HoaMiddleware>>
+): HoaMiddleware;
 
-export {
-  ApplicationOptions,
-  AppJSON,
-  CtxJSON,
-  CtxOptions,
-  HoaHeadersInit,
-  HoaMiddleware,
-  HttpErrorOptions,
-  ReqJSON,
-  ResJSON,
-  NextFunction,
-  ResponseBody
-};
-
-export { Application as Hoa, HoaContext, HoaRequest, HoaResponse, HttpError, compose };
-
-export default Application;
+export default Hoa;

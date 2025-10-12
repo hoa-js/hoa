@@ -1,4 +1,4 @@
-import Hoa from '../../src/application.js'
+import Hoa from '../../src/hoa.js'
 
 describe('app.onerror(err, ctx)', () => {
   it('should throw TypeError for non-error values', () => {

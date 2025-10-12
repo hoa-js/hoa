@@ -1,4 +1,4 @@
-import Hoa from '../../src/application.js'
+import Hoa from '../../src/hoa.js'
 
 describe('app.fetch(request, env, ctx)', () => {
   it('should compose once and reuse cached middleware on subsequent fetch calls', async () => {

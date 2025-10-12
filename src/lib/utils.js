@@ -232,8 +232,8 @@ const UNMATCHED_SURROGATE_PAIR_REPLACE = '$1\uFFFD$2'
  * unpaired surrogate pairs with the Unicode replacement character prior to
  * encoding.
  *
- * @param {string} url
- * @return {string}
+ * @param {string} url - URL string to encode
+ * @return {string} Encoded URL string
  * @public
  */
 

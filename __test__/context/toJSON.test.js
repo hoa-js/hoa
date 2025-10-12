@@ -1,4 +1,4 @@
-import Hoa from '../../src/application.js'
+import Hoa from '../../src/hoa.js'
 
 describe('ctx.toJSON()', () => {
   it('should return a serializable JSON representation', () => {
