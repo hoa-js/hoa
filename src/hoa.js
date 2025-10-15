@@ -34,7 +34,7 @@ export default class Hoa {
   /**
    * Extend the application with a plugin initializer.
    *
-   * @param {HoaExtend} fn - Plugin function that receives the app instance
+   * @param {HoaExtension} fn - Plugin function that receives the app instance
    * @returns {Hoa} The Hoa instance for method chaining
    * @throws {TypeError}
    * @public

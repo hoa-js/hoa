@@ -20,7 +20,7 @@ interface ResJSON {
   headers: Record<string, string>;
 }
 
-export type HoaExtend = (app: Hoa) => void;
+export type HoaExtension = (app: Hoa) => void;
 
 export type HoaMiddleware = (ctx: HoaContext, next?: () => Promise<void>) => Promise<void> | void;
 
@@ -34,7 +34,7 @@ export declare class Hoa {
   readonly HoaResponse: typeof HoaResponse;
   readonly middlewares: HoaMiddleware[];
 
-  extend(fn: HoaExtend): this;
+  extend(fn: HoaExtension): this;
   use(fn: HoaMiddleware): this;
   fetch(request: Request, env?: any, executionCtx?: any): Promise<Response>;
   protected handleRequest(ctx: HoaContext, middlewareFn: HoaMiddleware): Promise<Response>;
