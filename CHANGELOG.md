@@ -1,3 +1,7 @@
+## v0.2.1 / 2025-10-15
+
+- fix: rename HoaExtend to HoaExtension
+
 ## v0.2.0 / 2025-10-12
 
 - refactor: rename Application to Hoa
