@@ -1,6 +1,5 @@
 import compose from './lib/compose.js'
 import HttpError from './lib/http-error.js'
-import { statusEmptyMapping } from './lib/utils.js'
 import HoaContext from './context.js'
 import HoaRequest from './request.js'
 import HoaResponse from './response.js'
@@ -87,10 +86,9 @@ export default class Hoa {
    * @private
    */
   handleRequest (ctx, middlewareFn) {
-    const onerror = (err) => ctx.onerror(err)
-    const handleResponse = () => respond(ctx)
-
-    return middlewareFn(ctx).then(handleResponse).catch(onerror)
+    return middlewareFn(ctx)
+      .then(() => ctx.response)
+      .catch((err) => ctx.onerror(err))
   }
 
   /**
@@ -158,94 +156,6 @@ export default class Hoa {
       name: this.name
     }
   }
-}
-
-/**
- * Build Web Standard Response from context state.
- * Handles various body types, HEAD requests, and status-specific behaviors.
- *
- * @param {HoaContext} ctx - Request context with response state
- * @returns {Response} Web Standard Response object
- * @private
- */
-function respond (ctx) {
-  const { res, req } = ctx
-  let body = res.body
-
-  // ignore body for HEAD requests
-  if (req.method === 'HEAD') {
-    if (!res.has('Content-Length')) {
-      const contentLength = res.length
-      if (Number.isInteger(contentLength)) {
-        res.length = contentLength
-      }
-    }
-
-    return new Response(null, {
-      status: res.status,
-      statusText: res.statusText,
-      headers: res._headers
-    })
-  }
-
-  // ignore body
-  if (statusEmptyMapping[res.status]) {
-    // strip headers
-    res.body = null
-    return new Response(null, {
-      status: res.status,
-      statusText: res.statusText,
-      headers: res._headers
-    })
-  }
-
-  // status no body
-  if (body == null) {
-    if (res._explicitNullBody) {
-      res.delete('Content-Type')
-      res.delete('Transfer-Encoding')
-      res.set('Content-Length', '0')
-    }
-    return new Response(null, {
-      status: res.status,
-      statusText: res.statusText,
-      headers: res._headers
-    })
-  }
-
-  // String|Blob|ArrayBuffer|TypedArray|ReadableStream|FormData|URLSearchParams
-  if (
-    (typeof body === 'string') ||
-    (body instanceof Blob) ||
-    (body instanceof ArrayBuffer) ||
-    ArrayBuffer.isView(body) ||
-    (body instanceof ReadableStream) ||
-    (body instanceof FormData) ||
-    (body instanceof URLSearchParams)
-  ) {
-    return new Response(body, {
-      status: res.status,
-      statusText: res.statusText,
-      headers: res._headers
-    })
-  }
-
-  // Response
-  if (body instanceof Response) {
-    return new Response(body.body, {
-      status: res.status,
-      statusText: res.statusText,
-      headers: res._headers
-    })
-  }
-
-  // json
-  body = JSON.stringify(body)
-  return new Response(body, {
-    status: res.status,
-    statusText: res.statusText,
-    headers: res._headers
-  })
 }
 
 export { Hoa, HoaContext, HoaRequest, HoaResponse, HttpError, compose }

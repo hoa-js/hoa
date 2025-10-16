@@ -58,6 +58,7 @@ export declare class HoaContext {
   assert<T>(value: T, status: number, message?: string | { message?: string; cause?: unknown; expose?: boolean; headers?: Headers | Record<string, string> | Iterable<readonly [string, string]> }, options?: { message?: string; cause?: unknown; expose?: boolean; headers?: Headers | Record<string, string> | Iterable<readonly [string, string]> }): asserts value is NonNullable<T>;
   onerror(err: unknown): Response;
   toJSON(): CtxJSON;
+  readonly response: Response;
 }
 
 export declare class HoaRequest {

@@ -1,5 +1,5 @@
 import HttpError from './lib/http-error.js'
-import { statusTextMapping } from './lib/utils.js'
+import { statusTextMapping, statusEmptyMapping } from './lib/utils.js'
 
 /**
  * @typedef {Object} CtxJSON
@@ -90,6 +90,93 @@ export default class HoaContext {
 
     return new Response(res.body, {
       status: res.status,
+      headers: res._headers
+    })
+  }
+
+  /**
+   * Build Web Standard Response from current context state.
+   * Handles various body types, HEAD requests, and status-specific behaviors.
+   *
+   * @returns {Response} Web Standard Response object
+   * @public
+  */
+  get response () {
+    const { res, req } = this
+    let body = res.body
+
+    // ignore body for HEAD requests
+    if (req.method === 'HEAD') {
+      if (!res.has('Content-Length')) {
+        const contentLength = res.length
+        if (Number.isInteger(contentLength)) {
+          res.length = contentLength
+        }
+      }
+
+      return new Response(null, {
+        status: res.status,
+        statusText: res.statusText,
+        headers: res._headers
+      })
+    }
+
+    // ignore body
+    if (statusEmptyMapping[res.status]) {
+      // strip headers
+      res.body = null
+      return new Response(null, {
+        status: res.status,
+        statusText: res.statusText,
+        headers: res._headers
+      })
+    }
+
+    // status no body
+    if (body == null) {
+      if (res._explicitNullBody) {
+        res.delete('Content-Type')
+        res.delete('Transfer-Encoding')
+        res.set('Content-Length', '0')
+      }
+      return new Response(null, {
+        status: res.status,
+        statusText: res.statusText,
+        headers: res._headers
+      })
+    }
+
+    // String|Blob|ArrayBuffer|TypedArray|ReadableStream|FormData|URLSearchParams
+    if (
+      (typeof body === 'string') ||
+      (body instanceof Blob) ||
+      (body instanceof ArrayBuffer) ||
+      ArrayBuffer.isView(body) ||
+      (body instanceof ReadableStream) ||
+      (body instanceof FormData) ||
+      (body instanceof URLSearchParams)
+    ) {
+      return new Response(body, {
+        status: res.status,
+        statusText: res.statusText,
+        headers: res._headers
+      })
+    }
+
+    // Response
+    if (body instanceof Response) {
+      return new Response(body.body, {
+        status: res.status,
+        statusText: res.statusText,
+        headers: res._headers
+      })
+    }
+
+    // json
+    body = JSON.stringify(body)
+    return new Response(body, {
+      status: res.status,
+      statusText: res.statusText,
       headers: res._headers
     })
   }
