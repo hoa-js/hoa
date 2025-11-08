@@ -1,3 +1,7 @@
+## v0.3.1 / 2025-11-08
+
+- fix: app.onerror print original error
+
 ## v0.3.0 / 2025-10-16
 
 - feat: move respond() to ctx.response
