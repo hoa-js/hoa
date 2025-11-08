@@ -131,8 +131,7 @@ export default class Hoa {
     if (err.status === 404 || err.expose) return
     if (this.silent) return
 
-    const msg = err.stack || err.toString()
-    console.error(`\n${msg.replace(/^/gm, '  ')}\n`)
+    console.error(err)
   }
 
   /**

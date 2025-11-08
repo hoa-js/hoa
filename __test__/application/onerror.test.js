@@ -100,34 +100,24 @@ describe('app.onerror(err, ctx)', () => {
     console.error = original
   })
 
-  it('should use err.stack when available', () => {
+  it('should call console.error(err) for both stack present and missing', () => {
     const app = new Hoa()
     const original = console.error
-    let payload = ''
-    console.error = (msg) => { payload = msg }
+    const calls = []
+    console.error = (arg) => { calls.push(arg) }
 
-    const err = new Error('no-stack-error')
-    err.stack = 'stack trace'
+    const errWithStack = new Error('with-stack')
+    errWithStack.stack = 'stack trace'
 
-    app.onerror(err)
+    const errWithoutStack = new Error('without-stack')
+    errWithoutStack.stack = undefined
 
-    expect(payload).toContain('stack trace')
+    app.onerror(errWithStack)
+    app.onerror(errWithoutStack)
 
-    console.error = original
-  })
-
-  it('should use err.toString() when err.stack is missing', () => {
-    const app = new Hoa()
-    const original = console.error
-    let payload = ''
-    console.error = (msg) => { payload = msg }
-
-    const err = new Error('no-stack-error')
-    err.stack = undefined
-
-    app.onerror(err)
-
-    expect(payload).toContain('Error: no-stack-error')
+    expect(calls).toHaveLength(2)
+    expect(calls[0]).toBe(errWithStack)
+    expect(calls[1]).toBe(errWithoutStack)
 
     console.error = original
   })
