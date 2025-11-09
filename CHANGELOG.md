@@ -1,3 +1,7 @@
+## v0.3.2 / 2025-11-09
+
+- fix: export statusTextMapping + statusRedirectMapping + statusEmptyMapping
+
 ## v0.3.1 / 2025-11-08
 
 - fix: app.onerror print original error

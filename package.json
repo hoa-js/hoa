@@ -1,6 +1,6 @@
 {
   "name": "hoa",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "A minimal web framework built on Web Standards",
   "main": "./dist/cjs/hoa.js",
   "type": "module",
