@@ -1,5 +1,6 @@
 import compose from './lib/compose.js'
 import HttpError from './lib/http-error.js'
+import { statusTextMapping, statusRedirectMapping, statusEmptyMapping } from './lib/utils.js'
 import HoaContext from './context.js'
 import HoaRequest from './request.js'
 import HoaResponse from './response.js'
@@ -157,4 +158,14 @@ export default class Hoa {
   }
 }
 
-export { Hoa, HoaContext, HoaRequest, HoaResponse, HttpError, compose }
+export {
+  Hoa,
+  HoaContext,
+  HoaRequest,
+  HoaResponse,
+  HttpError,
+  compose,
+  statusTextMapping,
+  statusRedirectMapping,
+  statusEmptyMapping
+}
