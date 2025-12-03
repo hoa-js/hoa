@@ -366,10 +366,10 @@ export default class HoaResponse {
    * @param {string} type - The content type or alias (e.g., 'json', 'html', 'application/json')
    * @public
    */
-  set type (type) {
-    if (!type) return
-    type = commonTypeMapping[type] || type
-    this.set('Content-Type', type)
+  set type (val) {
+    if (!val) return
+    val = commonTypeMapping[val] || val
+    this.set('Content-Type', val)
   }
 
   /**

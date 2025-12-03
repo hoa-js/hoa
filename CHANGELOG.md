@@ -1,3 +1,7 @@
+## v0.3.3 / 2025-12-03
+
+- fix: types improvements
+
 ## v0.3.2 / 2025-11-09
 
 - fix: export statusTextMapping + statusRedirectMapping + statusEmptyMapping

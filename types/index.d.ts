@@ -1,23 +1,30 @@
-interface AppJSON {
+interface HoaAppJson {
   name: string;
 }
 
-interface CtxJSON {
-  app: AppJSON;
-  req: ReqJSON;
-  res: ResJSON;
+interface HoaContextJson {
+  app: HoaAppJson;
+  req: HoaRequestJson;
+  res: HoaResponseJson;
 }
 
-interface ReqJSON {
+interface HoaRequestJson {
   method: string;
   url: string;
   headers: Record<string, string>;
 }
 
-interface ResJSON {
+interface HoaResponseJson {
   status: number;
   statusText: string;
   headers: Record<string, string>;
+}
+
+interface HoaError {
+  message?: string;
+  cause?: unknown;
+  expose?: boolean;
+  headers?: Headers | Record<string, string> | Iterable<readonly [string, string]>;
 }
 
 export type HoaExtension = (app: Hoa) => void;
@@ -40,7 +47,7 @@ export declare class Hoa {
   protected handleRequest(ctx: HoaContext, middlewareFn: HoaMiddleware): Promise<Response>;
   protected createContext(request: Request, env?: any, executionCtx?: any): HoaContext;
   protected onerror(err: unknown, ctx?: HoaContext): void;
-  toJSON(): AppJSON;
+  toJSON(): HoaAppJson;
 
   static get default(): typeof Hoa;
 }
@@ -54,10 +61,10 @@ export declare class HoaContext {
   env?: any;
   executionCtx?: any;
   state: Record<string, any>;
-  throw(status: number, message?: string | { message?: string; cause?: unknown; expose?: boolean; headers?: Headers | Record<string, string> | Iterable<readonly [string, string]> }, options?: { message?: string; cause?: unknown; expose?: boolean; headers?: Headers | Record<string, string> | Iterable<readonly [string, string]> }): never;
-  assert<T>(value: T, status: number, message?: string | { message?: string; cause?: unknown; expose?: boolean; headers?: Headers | Record<string, string> | Iterable<readonly [string, string]> }, options?: { message?: string; cause?: unknown; expose?: boolean; headers?: Headers | Record<string, string> | Iterable<readonly [string, string]> }): asserts value is NonNullable<T>;
+  throw(status: number, message?: string | HoaError, options?: HoaError): never;
+  assert<T>(value: T, status: number, message?: string | HoaError, options?: HoaError): asserts value is NonNullable<T>;
   onerror(err: unknown): Response;
-  toJSON(): CtxJSON;
+  toJSON(): HoaContextJson;
   readonly response: Response;
 }
 
@@ -67,54 +74,54 @@ export declare class HoaRequest {
   res: HoaResponse;
 
   get url(): URL;
-  set url(value: string | URL);
+  set url(val: string | URL);
 
   get href(): string;
-  set href(value: string);
+  set href(val: string);
 
   get origin(): string;
-  set origin(value: string);
+  set origin(val: string);
 
   get protocol(): string;
-  set protocol(value: string);
+  set protocol(val: string);
 
   get host(): string;
-  set host(value: string);
+  set host(val: string);
 
   get hostname(): string;
-  set hostname(value: string);
+  set hostname(val: string);
 
   get port(): string;
-  set port(value: string);
+  set port(val: string);
 
   get pathname(): string;
-  set pathname(value: string);
+  set pathname(val: string);
 
   get search(): string;
-  set search(value: string);
+  set search(val: string);
 
   get hash(): string;
-  set hash(value: string);
+  set hash(val: string);
 
   get method(): string;
-  set method(value: string);
+  set method(val: string);
 
   get query(): Record<string, string | string[]>;
-  set query(value: Record<string, string | string[]>);
+  set query(val: Record<string, string | string[]>);
 
   get headers(): Record<string, string>;
-  set headers(value: Headers | Record<string, string> | Iterable<readonly [string, string]>);
+  set headers(val: Headers | Record<string, string> | Iterable<readonly [string, string]>);
 
   get body(): ReadableStream<Uint8Array> | null;
-  set body(value: any);
+  set body(val: any);
 
   get(field: string): string | null;
   getSetCookie(): string[];
   has(field: string): boolean;
-  set(field: string, value: string): void;
-  set(values: Record<string, string>): void;
-  append(field: string, value: string): void;
-  append(values: Record<string, string>): void;
+  set(field: string, val: string): void;
+  set(field: Record<string, string>): void;
+  append(field: string, val: string): void;
+  append(field: Record<string, string>): void;
   delete(field: string): void;
 
   get ips(): string[];
@@ -129,10 +136,10 @@ export declare class HoaRequest {
   text(): Promise<string>;
   json<T = any>(): Promise<T>;
   formData(): Promise<FormData>;
-  toJSON(): ReqJSON;
+  toJSON(): HoaRequestJson;
 }
 
-type ResponseBody =
+type HoaResponseBody =
   | string
   | Blob
   | ArrayBuffer
@@ -151,43 +158,43 @@ export declare class HoaResponse {
   req: HoaRequest;
 
   get headers(): Record<string, string>;
-  set headers(value: Headers | Record<string, string> | Iterable<readonly [string, string]>);
+  set headers(val: Headers | Record<string, string> | Iterable<readonly [string, string]>);
 
   get(field: string): string | null;
   getSetCookie(): string[];
   has(field: string): boolean;
-  set(field: string, value: string): void;
-  set(values: Record<string, string>): void;
-  append(field: string, value: string): void;
-  append(values: Record<string, string>): void;
+  set(field: string, val: string): void;
+  set(field: Record<string, string>): void;
+  append(field: string, val: string): void;
+  append(field: Record<string, string>): void;
   delete(field: string): void;
 
   get status(): number;
-  set status(value: number);
+  set status(val: number);
 
   get statusText(): string;
-  set statusText(value: string);
+  set statusText(val: string);
 
-  get body(): ResponseBody;
-  set body(value: ResponseBody);
+  get body(): HoaResponseBody;
+  set body(val: HoaResponseBody);
 
   redirect(url: string): void;
   back(alt?: string): void;
 
   get type(): string | null;
-  set type(value: string);
+  set type(val: string);
 
   get length(): number | null;
-  set length(value: number | string);
+  set length(val: number | string);
 
-  toJSON(): ResJSON;
+  toJSON(): HoaResponseJson;
 }
 
 export declare class HttpError extends Error {
   constructor(
     status: number,
-    message?: string | { message?: string; cause?: unknown; expose?: boolean; headers?: Headers | Record<string, string> | Iterable<readonly [string, string]> },
-    options?: { message?: string; cause?: unknown; expose?: boolean; headers?: Headers | Record<string, string> | Iterable<readonly [string, string]> }
+    message?: string | HoaError,
+    options?: HoaError
   );
   readonly name: string;
   readonly status: number;
