@@ -486,7 +486,7 @@ export default class HoaRequest {
 
   /**
    * Get the request content length from the Content-Length header.
-   * Returns undefined if the header is missing, empty, or not a valid number.
+   * Returns null if the header is missing, empty, or not a valid number.
    *
    * @returns {number|null} The content length in bytes, or null if not available
    * @public
@@ -494,7 +494,10 @@ export default class HoaRequest {
   get length () {
     const len = this.get('Content-Length')
     if (len == null) return null
-    return ~~len
+    if (!/^\d+$/.test(len)) return null
+    const n = Number(len)
+    if (!Number.isSafeInteger(n)) return null
+    return n
   }
 
   /**
