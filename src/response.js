@@ -356,7 +356,7 @@ export default class HoaResponse {
   get type () {
     const type = this.get('Content-Type')
     if (!type) return null
-    return type.split(';', 1)[0]
+    return type.split(';', 1)[0].trim().toLowerCase()
   }
 
   /**

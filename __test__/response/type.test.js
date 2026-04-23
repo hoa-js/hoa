@@ -54,6 +54,22 @@ describe('res.type', () => {
     expect(ctx.res.type).toBe('text/html')
   })
 
+  it('should normalize content type casing', () => {
+    const app = new Hoa()
+    const request = new Request('https://example.com/')
+    const ctx = app.createContext(request)
+    ctx.res.set('Content-Type', 'APPLICATION/JSON; CHARSET=UTF-8')
+    expect(ctx.res.type).toBe('application/json')
+  })
+
+  it('should trim whitespace around content type', () => {
+    const app = new Hoa()
+    const request = new Request('https://example.com/')
+    const ctx = app.createContext(request)
+    ctx.res.set('Content-Type', '  application/json  ; charset=utf-8  ')
+    expect(ctx.res.type).toBe('application/json')
+  })
+
   it('should return null when no content-type', () => {
     const app = new Hoa()
     const request = new Request('https://example.com/')
