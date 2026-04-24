@@ -18,7 +18,8 @@ const composeSlim = (middlewares) => async (ctx, next) => {
 
 /**
  * Compose multiple middleware functions into one.
- * Validates input, flattens nested arrays, and returns a composed dispatcher.
+ * Validates input, flattens one level of nested arrays,
+ * and returns a composed dispatcher.
  *
  * @param {HoaMiddleware[]|HoaMiddleware[][]} middlewares - Array of middleware functions or nested arrays
  * @returns {HoaMiddleware} Composed middleware function
