@@ -207,4 +207,10 @@ export declare function compose(
   middlewares: ReadonlyArray<HoaMiddleware> | ReadonlyArray<ReadonlyArray<HoaMiddleware>>
 ): HoaMiddleware;
 
+export const statusTextMapping: Record<number, string>;
+
+export const statusRedirectMapping: Record<number, boolean>;
+
+export const statusEmptyMapping: Record<number, boolean>;
+
 export default Hoa;
