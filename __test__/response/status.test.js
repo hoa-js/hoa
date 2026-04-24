@@ -37,7 +37,7 @@ describe('res.status', () => {
     const request = new Request('https://example.com/')
     const ctx = app.createContext(request)
     expect(() => { ctx.res.status = 99 }).toThrow(/invalid status code: 99/)
-    expect(() => { ctx.res.status = 1001 }).toThrow(/invalid status code: 1001/)
+    expect(() => { ctx.res.status = 600 }).toThrow(/invalid status code: 600/)
     expect(() => { ctx.res.status = 200.5 }).toThrow(/status code must be an integer/)
     expect(() => { ctx.res.status = '200' }).toThrow(/status code must be an integer/)
   })

@@ -35,7 +35,7 @@ describe('res.statusText', () => {
     const app = new Hoa()
     const request = new Request('https://example.com/')
     const ctx = app.createContext(request)
-    ctx.res.status = 999
+    ctx.res.status = 599
     expect(ctx.res.statusText).toBeUndefined()
   })
 

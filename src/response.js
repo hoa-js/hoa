@@ -167,7 +167,7 @@ export default class HoaResponse {
     if (!Number.isInteger(val)) {
       throw new TypeError('status code must be an integer')
     }
-    if (val < 100 || val > 1000) {
+    if (val < 100 || val > 599) {
       throw new TypeError(`invalid status code: ${val}`)
     }
     this._status = val
