@@ -27,9 +27,8 @@ export function parseSearchParamsToQuery (searchParams) {
  * @public
  */
 export function stringifyQueryToString (query) {
-  if (!query) {
-    return ''
-  }
+  if (!query) return ''
+  if (Object.keys(query).length === 0) return ''
   const params = new URLSearchParams()
   for (const [key, value] of Object.entries(query)) {
     if (Array.isArray(value)) {
